@@ -1,131 +1,173 @@
+/* 基础样式重置 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* 视口设置 */
+meta[name="viewport"] {
+  content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no";
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  background: #f5f6f8;
+  color: #333;
+  padding: 10px;
 }
 
-/* 总市值显示样式 */
-.total-value-display {
-    font-size: 100px;
-    font-weight: bold;
-    color: #000000;
-    padding: 40px;
-    margin-top: 40px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
-    margin-bottom: 20px;
+/* 头部总市值样式 */
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(5px);
+  padding: 1rem 0;
+  z-index: 100;
 }
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 1200px;
-    text-align: center;
+.total-value {
+  text-align: center;
+  color: #2e7d32;
+  font-weight: 700;
+  margin: 1rem 0;
+  letter-spacing: -0.05em;
+  font-size: 15vw; /* 动态缩放 */
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
+/* 表单控件组 */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin: 1rem 0;
+  flex-wrap: wrap;
 }
 
-/* 表单横向排列 */
-.stock-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
+.input-group {
+  flex: 1;
+  min-width: 200px;
 }
 
-.form-row {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-label {
-    font-weight: bold;
-}
-
-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+input[type="text"], 
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  -webkit-appearance: none;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 80px;
+  touch-action: manipulation;
 }
 
 button:hover {
-    background-color: #218838;
+  opacity: 0.9;
 }
 
-/* 持仓股票表格 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f8f9fa;
-}
-
-/* 每行显示 3 个股票持仓 */
-.stock-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+/* 股票项卡片 */
+.stock-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .stock-item {
-    flex: 1 1 calc(33.333% - 20px);
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  flex: 1 1 calc(33.333% - 20px);
+  position: relative;
+  overflow: hidden;
 }
 
-/* 操作按钮样式 */
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .stock-item {
+    flex: 1 1 100%;
+    margin: 8px 0;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+    padding: 15px;
+  }
+
+  /* 移动端强制显示操作按钮 */
+  .delete-btn {
+    display: block !important;
+    opacity: 1 !important;
+  }
 }
 
-.action-buttons button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+/* 触控优化 */
+@media (hover: none) {
+  button:active {
+    transform: scale(0.98);
+  }
+  
+  .stock-item {
+    touch-action: pan-y;
+  }
 }
 
-.action-buttons button:hover {
-    background-color: #0056b3;
+/* 虚拟键盘适配 */
+@media (max-height: 500px) {
+  header {
+    position: static;
+  }
+  
+  .total-value {
+    font-size: 10vw;
+  }
+}
+
+/* 删除按钮优化 */
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff4444;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 50%;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.stock-item:hover .delete-btn {
+  display: block;
+  opacity: 1;
+}
+
+/* 禁用自动填充背景色 */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+/* 表格滚动优化 */
+.stock-list {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
 }
