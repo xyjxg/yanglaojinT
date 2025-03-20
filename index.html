@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股票持仓跟踪器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 总市值显示区域 -->
+    <div id="totalValueDisplay" class="total-value-display">￥0.00</div>
+
+    <!-- 添加股票表单 -->
+    <div class="container">
+        <h1>股票持仓跟踪器</h1>
+        <form id="stockForm" class="stock-form">
+            <div class="form-row">
+                <label for="stockCode">股票代码：</label>
+                <input type="text" id="stockCode" placeholder="例如：600873" required>
+            </div>
+            <div class="form-row">
+                <label for="quantity">持仓数量：</label>
+                <input type="number" id="quantity" placeholder="例如：1000" required>
+            </div>
+            <button type="submit">添加股票</button>
+        </form>
+
+        <!-- 操作按钮 -->
+        <div class="action-buttons">
+            <button onclick="exportPortfolio()">导出</button>
+            <button onclick="importPortfolio()">导入</button>
+            <button onclick="clearPortfolio()">清仓</button>
+        </div>
+
+        <!-- 持仓股票表格 -->
+        <table id="stockTable">
+            <thead>
+                <tr>
+                    <th colspan="3">持仓股票</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 动态添加行 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
