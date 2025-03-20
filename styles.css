@@ -3,7 +3,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 meta[name="viewport"] {
@@ -17,243 +17,58 @@ body {
   padding: 10px;
 }
 
-/* 总市值超级显示 */
-.total-value {
-  position: relative;
-  margin: 1rem 0;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
+/* 总市值显示修复 */
 .total-value span {
-  display: inline-block;
-  font-weight: 900;
-  color: #1B5E20;
-  letter-spacing: -0.03em;
-  text-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  font-size: 24vw;
-  min-width: 120px;
+  color: #2e7d32 !important; /* 恢复绿色 */
 }
 
-.total-value::after {
-  content: "CNY";
-  display: block;
-  font-size: 0.25em;
-  color: #666;
-  margin-top: -0.8em;
-}
-
-/* 按钮组布局 */
-.controls {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 1.5rem 0;
-}
-
-.add-stock-group {
-  width: 100%;
-}
-
+/* 按钮颜色修复 */
 #addStock {
-  width: 100%;
-  padding: 16px;
-  background: #4CAF50;
-  font-size: 17px;
-  font-weight: 500;
+  background: #4CAF50 !important; /* 添加按钮绿色 */
 }
 
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
-.action-buttons button {
-  flex: 1;
-  min-width: 80px;
-  padding: 14px;
-  font-size: 15px;
+#exportBtn, 
+#importBtn {
+  background: #2196F3 !important; /* 导入导出蓝色 */
 }
 
 #clearAll {
-  background: #f44336;
+  background: #f44336 !important; /* 清仓按钮红色 */
 }
 
-/* 股票列表布局 */
+/* 持仓股票布局修正 */
 .stock-list {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  width: 100%;
-  padding-bottom: 20px;
 }
 
 .stock-item {
-  background: #fff;
+  width: 300px; /* 固定宽度 */
+  height: 140px; /* 固定高度 */
+  flex-shrink: 0; /* 禁止收缩 */
+  background: white;
   padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  flex: 1 1 calc(50% - 20px);
-  min-width: 280px;
-  max-width: 100%;
-  word-break: break-word;
-  position: relative;
-  transition: transform 0.2s;
-}
-
-.stock-item:hover {
-  transform: translateY(-2px);
-}
-
-/* 表格内容 */
-.stock-item table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.stock-item td {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-  vertical-align: middle;
-}
-
-.stock-item td:last-child {
-  text-align: right;
-}
-
-/* 删除按钮 */
-.delete-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #ff4444;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: none;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.stock-item:hover .delete-btn {
-  display: block;
-  opacity: 1;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: auto; /* 内容超出时显示滚动条 */
 }
 
 /* 移动端适配 */
 @media (max-width: 768px) {
   .stock-item {
-    flex: 1 1 100% !important;
-    min-width: 100%;
-    font-size: 15px;
-  }
-
-  .stock-item td {
-    display: block;
-    width: 100%;
-    padding: 10px 0;
-    border-bottom: none;
-  }
-
-  .stock-item td:before {
-    content: attr(data-label);
-    float: left;
-    font-weight: 500;
-    color: #666;
-    margin-right: 12px;
-  }
-
-  .action-buttons {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
-  }
-
-  .action-buttons button {
-    flex: 0 0 auto;
-    width: 30%;
-  }
-
-  .delete-btn {
-    display: block !important;
-    opacity: 1 !important;
+    width: 100%; /* 手机端全宽显示 */
+    height: auto; /* 高度自适应 */
+    min-height: 120px;
   }
 }
 
-/* 超小屏幕优化 */
-@media (max-width: 480px) {
-  .total-value span {
-    font-size: 22vw;
-  }
-
-  .stock-item {
-    padding: 12px;
-    font-size: 14px;
-  }
-
-  .action-buttons button {
-    width: 45%;
-    font-size: 14px;
-    padding: 12px;
-  }
-}
-
-/* 桌面端优化 */
-@media (min-width: 768px) {
-  .total-value span {
-    font-size: 4.5rem;
-    text-shadow: 0 5px 12px rgba(0,0,0,0.15);
-  }
-
-  body {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-}
-
-/* 输入框样式 */
-input[type="text"],
-input[type="number"] {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  background: #fff;
-  -webkit-appearance: none;
-}
-
-.input-group {
-  flex: 1;
-  min-width: 200px;
-}
-
-/* 按钮通用样式 */
+/* 防止按钮颜色被覆盖 */
 button {
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  color: white;
+  background: initial !important; /* 清除通用样式 */
 }
 
-button:active {
-  transform: scale(0.98);
-}
-
-#exportBtn, #importBtn {
-  background: #2196F3;
-}
-
-/* 触控优化 */
-@media (hover: none) {
-  button:active {
-    transform: scale(0.95);
-  }
+/* 操作按钮组保持原有颜色 */
+.action-buttons button {
+  background: inherit !important;
 }
