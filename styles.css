@@ -1,4 +1,4 @@
-/* 基础样式重置 */
+/* style.css */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,150 +6,133 @@
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-/* 视口设置 */
 meta[name="viewport"] {
-  content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no";
+  content: "width=device-width, initial-scale=1, maximum-scale=1";
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.6;
   background: #f5f6f8;
   color: #333;
   padding: 10px;
 }
 
-/* 头部总市值样式 */
-header {
-  position: sticky;
-  top: 0;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(5px);
-  padding: 1rem 0;
-  z-index: 100;
-}
-
+/* 总市值超级显示 */
 .total-value {
-  text-align: center;
-  color: #2e7d32;
-  font-weight: 700;
+  position: relative;
   margin: 1rem 0;
-  letter-spacing: -0.05em;
-  font-size: 15vw; /* 动态缩放 */
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* 表单控件组 */
+.total-value span {
+  display: inline-block;
+  font-weight: 900;
+  color: #1B5E20;
+  letter-spacing: -0.03em;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  font-size: 24vw;
+  min-width: 120px;
+}
+
+.total-value::after {
+  content: "CNY";
+  display: block;
+  font-size: 0.25em;
+  color: #666;
+  margin-top: -0.8em;
+}
+
+/* 按钮组布局 */
 .controls {
   display: flex;
-  gap: 10px;
-  margin: 1rem 0;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 15px;
+  margin: 1.5rem 0;
 }
 
-.input-group {
-  flex: 1;
-  min-width: 200px;
-}
-
-input[type="text"], 
-input[type="number"] {
+.add-stock-group {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  -webkit-appearance: none;
 }
 
-button {
-  background: #2196F3;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+#addStock {
+  width: 100%;
+  padding: 16px;
+  background: #4CAF50;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.action-buttons button {
   flex: 1;
   min-width: 80px;
-  touch-action: manipulation;
+  padding: 14px;
+  font-size: 15px;
 }
 
-button:hover {
-  opacity: 0.9;
+#clearAll {
+  background: #f44336;
 }
 
-/* 股票项卡片 */
+/* 股票列表布局 */
 .stock-list {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-top: 20px;
+  width: 100%;
+  padding-bottom: 20px;
 }
 
 .stock-item {
-  background: white;
+  background: #fff;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  flex: 1 1 calc(33.333% - 20px);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  flex: 1 1 calc(50% - 20px);
+  min-width: 280px;
+  max-width: 100%;
+  word-break: break-word;
   position: relative;
-  overflow: hidden;
+  transition: transform 0.2s;
 }
 
-/* 移动端优化 */
-@media (max-width: 768px) {
-  .stock-item {
-    flex: 1 1 100%;
-    margin: 8px 0;
-  }
-
-  .controls {
-    flex-direction: column;
-  }
-
-  button {
-    width: 100%;
-    padding: 15px;
-  }
-
-  /* 移动端强制显示操作按钮 */
-  .delete-btn {
-    display: block !important;
-    opacity: 1 !important;
-  }
+.stock-item:hover {
+  transform: translateY(-2px);
 }
 
-/* 触控优化 */
-@media (hover: none) {
-  button:active {
-    transform: scale(0.98);
-  }
-  
-  .stock-item {
-    touch-action: pan-y;
-  }
+/* 表格内容 */
+.stock-item table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-/* 虚拟键盘适配 */
-@media (max-height: 500px) {
-  header {
-    position: static;
-  }
-  
-  .total-value {
-    font-size: 10vw;
-  }
+.stock-item td {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
 }
 
-/* 删除按钮优化 */
+.stock-item td:last-child {
+  text-align: right;
+}
+
+/* 删除按钮 */
 .delete-btn {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 8px;
+  right: 8px;
   background: #ff4444;
-  width: 24px;
-  height: 24px;
-  padding: 0;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   display: none;
   opacity: 0;
@@ -161,13 +144,116 @@ button:hover {
   opacity: 1;
 }
 
-/* 禁用自动填充背景色 */
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .stock-item {
+    flex: 1 1 100% !important;
+    min-width: 100%;
+    font-size: 15px;
+  }
+
+  .stock-item td {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: none;
+  }
+
+  .stock-item td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: 500;
+    color: #666;
+    margin-right: 12px;
+  }
+
+  .action-buttons {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  .action-buttons button {
+    flex: 0 0 auto;
+    width: 30%;
+  }
+
+  .delete-btn {
+    display: block !important;
+    opacity: 1 !important;
+  }
 }
 
-/* 表格滚动优化 */
-.stock-list {
-  -webkit-overflow-scrolling: touch;
-  overflow-x: auto;
+/* 超小屏幕优化 */
+@media (max-width: 480px) {
+  .total-value span {
+    font-size: 22vw;
+  }
+
+  .stock-item {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .action-buttons button {
+    width: 45%;
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+/* 桌面端优化 */
+@media (min-width: 768px) {
+  .total-value span {
+    font-size: 4.5rem;
+    text-shadow: 0 5px 12px rgba(0,0,0,0.15);
+  }
+
+  body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+}
+
+/* 输入框样式 */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #fff;
+  -webkit-appearance: none;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* 按钮通用样式 */
+button {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  color: white;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+#exportBtn, #importBtn {
+  background: #2196F3;
+}
+
+/* 触控优化 */
+@media (hover: none) {
+  button:active {
+    transform: scale(0.95);
+  }
 }
